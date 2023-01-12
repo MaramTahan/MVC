@@ -1,0 +1,65 @@
+@{
+   @*to appear the name of page*@
+   ViewData["Title"] = "Courses Available";
+}
+@*this to connect the controller with models*@
+@model IList<westcoast_education.web.Models.Courses>
+
+   <div class="name">
+      <h1 class="page-title">WestCoast <br> <span>Education</span></h1>
+   </div>
+   <div class="nav">
+      <ul class="navigation">
+         <li>@Html.ActionLink("Home", "Index", "Home")</li>
+         <li>@Html.ActionLink("Courses", "Index", "Courses")</li>
+      </ul>
+   </div>
+
+<h1 class="course-available">Courses Available</h1>
+<div class="courses-content">
+   @*Razor code that dynamically lists courses found in the Courses property of the viewbag*@
+   @foreach (var course in Model){
+      <div class="course">
+      <div class="course-text">
+         <h2 class="course-name">@course.name:</h2>
+         <ul>Course Number:
+            <li>@course.Id</li>
+         </ul>
+         <ul>Start Date:
+         <li>@course.startDate</li>
+         </ul>
+         <br>
+         <ul>End Date:
+         <li>@course.endDate</li>
+         </ul>
+         <br>
+         <ul>Place Of Study:
+         <li> @course.placeStudy</li>
+         </ul>
+         <br>
+         <ul>Teacher:
+         <li>@course.teacher</li>
+         </ul>
+      </div>
+   </div>
+   }
+</div>
+
+<div class="footer-cotent">
+   <div class="footer-up">
+      <div class="name">
+         <h1 class="page-title-footer">WestCoast <br><span>Education</span></h1>
+      </div>
+      <div class="icon">
+         <i class="fa-brands fa-facebook"></i>
+         <i class="fa-brands fa-instagram"></i>
+         <i class="fa-brands fa-twitter"></i>
+      </div>
+   </div>
+   <hr>
+   <div class="footer-down">
+      <p>
+      WestCoastEducation@gmail.com | 0700551099 | Nasaret18,Varberg
+      </p>
+   </div>
+</div>

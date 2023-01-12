@@ -1,0 +1,91 @@
+[
+
+ {
+  "firstName": "Emily ",
+  "lastName": "Smith",
+  "phoneNumber": "0723340511",
+  "emailAddress": "emily.smith@gmail.com",
+  "address":"Emily Smith - 12399 Main Street, Varberg"
+  
+ },
+
+ {
+  "firstName": "Michael",
+  "lastName": "Johnson",
+  "phoneNumber": "0723330056",
+  "emailAddress": " michael.johnson@outlook.com",
+  "address":"Michael Johnson - 45605 Park Avenue, Jonköping"
+ },
+
+
+ {
+  "firstName": "Jessica",
+  "lastName": "Williams",
+  "phoneNumber": "0723776088",
+  "emailAddress": "  jessica.williams@yahoo.com",
+  "address":"essica Williams - 78944 Maple Street, Jonköping"
+ },
+
+
+ {
+  "firstName": "Matthew",
+  "lastName": "Brown",
+  "phoneNumber": "0723220036",
+  "emailAddress": "  matthew.brown@hotmail.com",
+  "address":"Matthew Brown - 32112 Oak Street, Göteborg"
+ },
+
+
+ {
+  "firstName": "Maram",
+  "lastName": "Tahan",
+  "phoneNumber": "0739842900",
+  "emailAddress": "  mera.tahan@gmail.com",
+  "address":"Maram Tahan - 43265 Nasaret, väröbacka"
+ },
+
+
+ {
+  "firstName": "Olivia ",
+  "lastName": "Jones",
+  "phoneNumber": "0738112927",
+  "emailAddress": "  olivia.jones@gnail.com",
+  "address":"Olivia Jones - 15933 Pine Street, Göteborg"
+ },
+
+
+ {
+  "firstName": "James ",
+  "lastName": "Davis",
+  "phoneNumber": "0736702010",
+  "emailAddress": "  james.davis@gmail.com",
+  "address":"James Davis -75333 Cedar Street, Borås"
+ },
+
+
+ {
+  "firstName": "Abigail ",
+  "lastName": "Martinez",
+  "phoneNumber": "0738449050",
+  "emailAddress": "   abigail.martinez@outlook.com",
+  "address":"Abigail Martinez - 13590 Maple Avenue, Svenjonga"
+ },
+
+
+ {
+  "firstName": "Noah",
+  "lastName": "Akkad",
+  "phoneNumber": "0729447070",
+  "emailAddress": "  noah.akkad@gmail.com",
+  "address":"Noah Akkad- 42256 Nasaret, Bua"
+ },
+
+
+ {
+  "firstName": "Sophia",
+  "lastName": "Garcia",
+  "phoneNumber": "0723669898",
+  "emailAddress": "  sophia.garcia@hotmail.com",
+  "address":"Sophia Garcia - 3690 Pine Avenue, varanmo"
+ }
+]
