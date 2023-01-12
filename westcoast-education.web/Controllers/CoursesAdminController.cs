@@ -13,8 +13,10 @@ namespace westcoast_education.web.Controllers;
     public class CoursesAdminController : Controller
     {
   private readonly ICourseRepository _repo;
-  public CoursesAdminController(ICourseRepository repo)
+  public  IRepository<Courses> _genericRepo {get;}
+  public CoursesAdminController(IRepository<Courses> genericRepo, ICourseRepository repo)
   {
+   _genericRepo = genericRepo;
         _repo = repo;
   }
 
@@ -22,7 +24,7 @@ namespace westcoast_education.web.Controllers;
         {
             try{
                 var courses = await 
-                _repo.ListAllAsync();
+                _genericRepo.ListAllAsync();
             
             var model = courses.Select(v => new CourseListViewModel{
                 Id = v.Id,
@@ -52,6 +54,7 @@ namespace westcoast_education.web.Controllers;
             var addCourse = new CoursePostViewModel();
             return View("Create", addCourse);
         }
+
         [HttpPost("create")]
         public async Task<IActionResult> Create(CoursePostViewModel addcourse)
         {
@@ -77,8 +80,8 @@ namespace westcoast_education.web.Controllers;
                 teacher = addcourse.teacher,
                 placeStudy = addcourse.placeStudy
             };
-            if(await _repo.AddAsync(courseToAdd)){
-                if (await _repo.SaveAsync())
+            if(await _genericRepo.AddAsync(courseToAdd)){
+                if (await _genericRepo.SaveAsync())
                 {
                     return RedirectToAction(nameof(Index));
                 }
@@ -111,7 +114,7 @@ namespace westcoast_education.web.Controllers;
             public async Task<IActionResult> Edit(int Id){
                try
                {
-                var courseEdit = await _repo.FindByIdAsync(Id);
+                var courseEdit = await _genericRepo.FindByIdAsync(Id);
                 if (courseEdit is null){
                     var error = new ErrorModel
             {
@@ -150,7 +153,7 @@ namespace westcoast_education.web.Controllers;
                 {
                     if (!ModelState.IsValid) return View("edit", courseEdit);
 
-                    var courseToUpdate = await _repo.FindByIdAsync(Id);
+                    var courseToUpdate = await _genericRepo.FindByIdAsync(Id);
 
                     if (courseToUpdate is null) return RedirectToAction(nameof(Index));
                     courseToUpdate.courseNumber = courseEdit.courseNumber;
@@ -160,8 +163,8 @@ namespace westcoast_education.web.Controllers;
                     courseToUpdate.teacher = courseEdit.teacher;
                     courseToUpdate.placeStudy = courseEdit.placeStudy;
 
-                    if(await _repo.UpdateAsync(courseToUpdate)){
-                        if (await _repo.SaveAsync())
+                    if(await _genericRepo.UpdateAsync(courseToUpdate)){
+                        if (await _genericRepo.SaveAsync())
                         {
                             return RedirectToAction(nameof(Index));
                         }
@@ -193,12 +196,12 @@ namespace westcoast_education.web.Controllers;
             public async Task<IActionResult> Delete(int Id){
                 try
                 {
-                    var courseToDelete = await _repo.FindByIdAsync(Id);
+                    var courseToDelete = await _genericRepo.FindByIdAsync(Id);
 
                     if (courseToDelete is null) return RedirectToAction(nameof(Index));
 
-                    if(await _repo.DeleteAsync(courseToDelete)){
-                        if (await _repo.SaveAsync())
+                    if(await _genericRepo.DeleteAsync(courseToDelete)){
+                        if (await _genericRepo.SaveAsync())
                         {
                             return RedirectToAction(nameof(Index));
                         }
