@@ -34,17 +34,17 @@ namespace westcoast_education.web.Controllers;
 
             return View("Index", users);
         }
-        [HttpGet("create")]
+        [HttpGet("Create")]
         public IActionResult Create(){
             var addUser = new UserPostViewModel();
             return View("Create", addUser);
         }
-        [HttpPost("create")]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create(UserPostViewModel addUser)
         {
             try
             {
-                  if (!ModelState.IsValid) return View("create", addUser);
+                  if (!ModelState.IsValid) return View("Create", addUser);
                 var exists = await _unitOfWork.TeacherUserRepository.FindByEmailAsync(addUser.email);
                 if (exists is not null)
             {
@@ -93,7 +93,7 @@ namespace westcoast_education.web.Controllers;
             //-------------------end create course------------------
             //------------------------------------------------------
             //-------------------start edit course------------------
-            [HttpGet("edit/{userId}")]
+            [HttpGet("Edit/{userId}")]
 
             public async Task<IActionResult> Edit(int userId){
                try
@@ -117,7 +117,7 @@ namespace westcoast_education.web.Controllers;
                 phoneNumber = userEdit.phoneNumber,
                 address = userEdit.address
                 };
-                return View("edit", userToUpdate);
+                return View("Edit", userToUpdate);
                }
                catch (Exception ex)
                {
@@ -136,7 +136,7 @@ namespace westcoast_education.web.Controllers;
             public async Task<IActionResult> Edit(int userId, UserUpdateViewModel userEdit){
                 try
                 {
-                    if (!ModelState.IsValid) return View("edit", userEdit);
+                    if (!ModelState.IsValid) return View("Edit", userEdit);
 
                     var userToUpdate = await _unitOfWork.TeacherUserRepository.FindByIdAsync(userId);
 

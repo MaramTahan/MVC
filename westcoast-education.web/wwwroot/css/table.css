@@ -63,7 +63,9 @@ td {
  text-align: left;
 }
 
-
+.td-student{
+ line-height: 2em;
+}
 
 tbody > tr:hover {
  cursor: pointer;
@@ -74,7 +76,8 @@ tbody > tr:hover {
  display: flex;
  flex-direction: column;
  gap: 20px;
- width: 900px;
+ width: auto;
+ height: auto;
  
 }
 .edit-icon i{

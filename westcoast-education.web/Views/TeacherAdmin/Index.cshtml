@@ -4,20 +4,21 @@
 @model IList<westcoast_education.web.ViewModels.Users.UsersListViewModel>
 <div class="page">
       <h1>Teachers List</h1>
+      <br>
+      
       <div class="table-container">
          <div>
-            <a class="btn-add" asp-action="Create" asp-controller="TeacherAdmin">Add Course<i class="fa-solid fa-plus"></i></a>
+            <a class="btn-add" asp-action="Create" asp-controller="TeacherAdmin">Add Teacher<i class="fa-solid fa-plus"></i></a>
         </div>
       <table>
          <thead>
             <tr>
                <th></th>
-               <<th></th>
                <th>UserId</th>
                <th>FirstName</th>
                <th>LastName</th>
                <th>E-post</th>
-               <th>PhoneNumber</th>
+               <th>Phone.Nr</th>
                <th>Address</th>
                <th>CoursesTaught</th>
                <th></th>
@@ -27,7 +28,7 @@
             @foreach (var user in Model){
                <tr>
                   <td class="edit-icon">
-                     <a asp-action="Edit" asp-controller="TeacherAdmin"><i class="fa-solid fa-pen"></i></a>
+                     <a asp-action="Edit" asp-controller="TeacherAdmin" asp-route-userId=@user.userId><i class="fa-solid fa-pen"></i></a>
                   </td>
                   <td>@user.userId</td>
                   <td>@user.firstName </td>
@@ -37,7 +38,7 @@
                   <td>@user.address</td>
                   <td>@user.coursesTaught</td>
                   
-                  <td class="delete-icon"><a asp-action="Delete" asp-controller="TeacherAdmin"><i class="fa-solid fa-trash"></i></a>
+                  <td class="delete-icon"><a asp-action="Delete" asp-controller="TeacherAdmin" asp-route-userId=@user.userId><i class="fa-solid fa-trash"></i></a>
                   </td>
                </tr>
             }
