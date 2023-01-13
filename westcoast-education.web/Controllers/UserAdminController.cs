@@ -8,20 +8,17 @@ namespace westcoast_education.web.Controllers;
 
     public class UserAdminController : Controller
     {
-  private readonly IRepository<UserModel> _genericRepo;
-  
-  private readonly IUserRepository _repo;
-  public UserAdminController(IRepository<UserModel> genericRepo, IUserRepository repo)
+  private readonly IUnitOfWork _unitOfWork;
+  public UserAdminController(IUnitOfWork unitOfWork)
   {
-   _genericRepo = genericRepo;
-   _repo = repo;
+   _unitOfWork = unitOfWork;
    
   }
 
   [Route("users/admin")]
         public async Task<IActionResult> Index()
         {
-            var result = await _genericRepo.ListAllAsync();
+            var result = await _unitOfWork.UserRepository.ListAllAsync();
             var users = result.Select(u => new UsersListViewModel
             {
                 userId = u.userId,
@@ -44,7 +41,7 @@ namespace westcoast_education.web.Controllers;
             try
             {
                   if (!ModelState.IsValid) return View("create", addUser);
-                var exists = await _repo.FindByEmailAsync(addUser.email);
+                var exists = await _unitOfWork.UserRepository.FindByEmailAsync(addUser.email);
                 if (exists is not null)
             {
                 var error = new ErrorModel
@@ -61,8 +58,8 @@ namespace westcoast_education.web.Controllers;
                 email = addUser.email,
                 password= addUser.password
             };
-            if(await _genericRepo.AddAsync(userToAdd)){
-                if (await _genericRepo.SaveAsync())
+            if(await _unitOfWork.UserRepository.AddAsync(userToAdd)){
+                if (await _unitOfWork.Complete())
                 {
                     return RedirectToAction(nameof(Index));
                 }
@@ -94,7 +91,7 @@ namespace westcoast_education.web.Controllers;
             public async Task<IActionResult> Edit(int userId){
                try
                {
-                var userEdit = await _genericRepo.FindByIdAsync(userId);
+                var userEdit = await _unitOfWork.UserRepository.FindByIdAsync(userId);
                 if (userEdit is null){
                     var error = new ErrorModel
             {
@@ -131,7 +128,7 @@ namespace westcoast_education.web.Controllers;
                 {
                     if (!ModelState.IsValid) return View("edit", userEdit);
 
-                    var userToUpdate = await _genericRepo.FindByIdAsync(userId);
+                    var userToUpdate = await _unitOfWork.UserRepository.FindByIdAsync(userId);
 
                     if (userToUpdate is null){
                         var notFoundError = new ErrorModel{
@@ -144,8 +141,8 @@ namespace westcoast_education.web.Controllers;
                     userToUpdate.lastName = userEdit.lastName;
                     userToUpdate.email = userEdit.email;
 
-                    if(await _genericRepo.UpdateAsync(userToUpdate)){
-                        if (await _genericRepo.SaveAsync())
+                    if(await _unitOfWork.UserRepository.UpdateAsync(userToUpdate)){
+                        if (await _unitOfWork.Complete())
                         {
                             return RedirectToAction(nameof(Index));
                         }
@@ -176,12 +173,12 @@ namespace westcoast_education.web.Controllers;
             public async Task<IActionResult> Delete(int userId){
                 try
                 {
-                    var userToDelete = await _genericRepo.FindByIdAsync(userId);
+                    var userToDelete = await _unitOfWork.UserRepository.FindByIdAsync(userId);
 
                     if (userToDelete is null) return RedirectToAction(nameof(Index));
 
-                    if(await _genericRepo.DeleteAsync(userToDelete)){
-                        if (await _genericRepo.SaveAsync())
+                    if(await _unitOfWork.UserRepository.DeleteAsync(userToDelete)){
+                        if (await _unitOfWork.Complete())
                         {
                             return RedirectToAction(nameof(Index));
                         }

@@ -12,19 +12,17 @@ namespace westcoast_education.web.Controllers;
 [Authorize]
     public class CoursesAdminController : Controller
     {
-  private readonly ICourseRepository _repo;
-  public  IRepository<Courses> _genericRepo {get;}
-  public CoursesAdminController(IRepository<Courses> genericRepo, ICourseRepository repo)
+  private readonly IUnitOfWork _unitOfWork;
+  public CoursesAdminController(IUnitOfWork unitOfWork)
   {
-   _genericRepo = genericRepo;
-        _repo = repo;
+   _unitOfWork = unitOfWork;
+   
   }
 
   public async Task<IActionResult> Index()
         {
             try{
-                var courses = await 
-                _genericRepo.ListAllAsync();
+                var courses = await _unitOfWork.CourseRepository.ListAllAsync();
             
             var model = courses.Select(v => new CourseListViewModel{
                 Id = v.Id,
@@ -61,7 +59,7 @@ namespace westcoast_education.web.Controllers;
             try
             {
                   if (!ModelState.IsValid) return View("create", addcourse);
-                var exists = await _repo.FindBycourseNumberAsync(addcourse.courseNumber);
+                var exists = await _unitOfWork.CourseRepository.FindBycourseNumberAsync(addcourse.courseNumber);
                 if (exists is not null)
             {
                 var error = new ErrorModel
@@ -80,8 +78,8 @@ namespace westcoast_education.web.Controllers;
                 teacher = addcourse.teacher,
                 placeStudy = addcourse.placeStudy
             };
-            if(await _genericRepo.AddAsync(courseToAdd)){
-                if (await _genericRepo.SaveAsync())
+            if(await _unitOfWork.CourseRepository.AddAsync(courseToAdd)){
+                if (await _unitOfWork.Complete())
                 {
                     return RedirectToAction(nameof(Index));
                 }
@@ -114,7 +112,7 @@ namespace westcoast_education.web.Controllers;
             public async Task<IActionResult> Edit(int Id){
                try
                {
-                var courseEdit = await _genericRepo.FindByIdAsync(Id);
+                var courseEdit = await _unitOfWork.CourseRepository.FindByIdAsync(Id);
                 if (courseEdit is null){
                     var error = new ErrorModel
             {
@@ -153,7 +151,7 @@ namespace westcoast_education.web.Controllers;
                 {
                     if (!ModelState.IsValid) return View("edit", courseEdit);
 
-                    var courseToUpdate = await _genericRepo.FindByIdAsync(Id);
+                    var courseToUpdate = await _unitOfWork.CourseRepository.FindByIdAsync(Id);
 
                     if (courseToUpdate is null) return RedirectToAction(nameof(Index));
                     courseToUpdate.courseNumber = courseEdit.courseNumber;
@@ -163,8 +161,8 @@ namespace westcoast_education.web.Controllers;
                     courseToUpdate.teacher = courseEdit.teacher;
                     courseToUpdate.placeStudy = courseEdit.placeStudy;
 
-                    if(await _genericRepo.UpdateAsync(courseToUpdate)){
-                        if (await _genericRepo.SaveAsync())
+                    if(await _unitOfWork.CourseRepository.UpdateAsync(courseToUpdate)){
+                        if (await _unitOfWork.Complete())
                         {
                             return RedirectToAction(nameof(Index));
                         }
@@ -196,12 +194,12 @@ namespace westcoast_education.web.Controllers;
             public async Task<IActionResult> Delete(int Id){
                 try
                 {
-                    var courseToDelete = await _genericRepo.FindByIdAsync(Id);
+                    var courseToDelete = await _unitOfWork.CourseRepository.FindByIdAsync(Id);
 
                     if (courseToDelete is null) return RedirectToAction(nameof(Index));
 
-                    if(await _genericRepo.DeleteAsync(courseToDelete)){
-                        if (await _genericRepo.SaveAsync())
+                    if(await _unitOfWork.CourseRepository.DeleteAsync(courseToDelete)){
+                        if (await _unitOfWork.Complete())
                         {
                             return RedirectToAction(nameof(Index));
                         }
