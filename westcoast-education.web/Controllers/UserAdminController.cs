@@ -8,10 +8,12 @@ namespace westcoast_education.web.Controllers;
 
     public class UserAdminController : Controller
     {
+  private readonly IRepository<UserModel> _genericRepo;
   
   private readonly IUserRepository _repo;
-  public UserAdminController(IUserRepository repo)
+  public UserAdminController(IRepository<UserModel> genericRepo, IUserRepository repo)
   {
+   _genericRepo = genericRepo;
    _repo = repo;
    
   }
@@ -19,7 +21,7 @@ namespace westcoast_education.web.Controllers;
   [Route("users/admin")]
         public async Task<IActionResult> Index()
         {
-            var result = await _repo.ListAllAsync();
+            var result = await _genericRepo.ListAllAsync();
             var users = result.Select(u => new UsersListViewModel
             {
                 userId = u.userId,
@@ -59,8 +61,8 @@ namespace westcoast_education.web.Controllers;
                 email = addUser.email,
                 password= addUser.password
             };
-            if(await _repo.AddAsync(userToAdd)){
-                if (await _repo.SaveAsync())
+            if(await _genericRepo.AddAsync(userToAdd)){
+                if (await _genericRepo.SaveAsync())
                 {
                     return RedirectToAction(nameof(Index));
                 }
@@ -92,7 +94,7 @@ namespace westcoast_education.web.Controllers;
             public async Task<IActionResult> Edit(int userId){
                try
                {
-                var userEdit = await _repo.FindByIdAsync(userId);
+                var userEdit = await _genericRepo.FindByIdAsync(userId);
                 if (userEdit is null){
                     var error = new ErrorModel
             {
@@ -129,7 +131,7 @@ namespace westcoast_education.web.Controllers;
                 {
                     if (!ModelState.IsValid) return View("edit", userEdit);
 
-                    var userToUpdate = await _repo.FindByIdAsync(userId);
+                    var userToUpdate = await _genericRepo.FindByIdAsync(userId);
 
                     if (userToUpdate is null){
                         var notFoundError = new ErrorModel{
@@ -142,8 +144,8 @@ namespace westcoast_education.web.Controllers;
                     userToUpdate.lastName = userEdit.lastName;
                     userToUpdate.email = userEdit.email;
 
-                    if(await _repo.UpdateAsync(userToUpdate)){
-                        if (await _repo.SaveAsync())
+                    if(await _genericRepo.UpdateAsync(userToUpdate)){
+                        if (await _genericRepo.SaveAsync())
                         {
                             return RedirectToAction(nameof(Index));
                         }
@@ -174,12 +176,12 @@ namespace westcoast_education.web.Controllers;
             public async Task<IActionResult> Delete(int userId){
                 try
                 {
-                    var userToDelete = await _repo.FindByIdAsync(userId);
+                    var userToDelete = await _genericRepo.FindByIdAsync(userId);
 
                     if (userToDelete is null) return RedirectToAction(nameof(Index));
 
-                    if(await _repo.DeleteAsync(userToDelete)){
-                        if (await _repo.SaveAsync())
+                    if(await _genericRepo.DeleteAsync(userToDelete)){
+                        if (await _genericRepo.SaveAsync())
                         {
                             return RedirectToAction(nameof(Index));
                         }
