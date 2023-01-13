@@ -25,7 +25,7 @@
             @foreach (var course in Model){
                <tr>
                   <td class="edit-icon">
-                     <a asp-action="Edit" asp-controller="CoursesAdmin"><i class="fa-solid fa-pen"></i></a>
+                     <a asp-action="Edit" asp-controller="CoursesAdmin" asp-route-Id=@course.Id><i class="fa-solid fa-pen"></i></a>
                   </td>
                   <td>@course.courseNumber</td>
                   <td>@course.name</td>
@@ -33,7 +33,7 @@
                   <td>@course.endDate</td>
                   <td>@course.placeStudy</td>
                   <td>@course.teacher</td>
-                  <td class="delete-icon"><a asp-action="Delete" asp-controller="CoursesAdmin"><i class="fa-solid fa-trash"></i></a>
+                  <td class="delete-icon"><a asp-action="Delete" asp-controller="CoursesAdmin" asp-route-Id=@course.Id><i class="fa-solid fa-trash"></i></a>
                   </td>
                </tr>
             }

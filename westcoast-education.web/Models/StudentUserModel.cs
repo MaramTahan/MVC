@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace westcoast_education.web.Models;
 
-    public class UserModel
+    public class StudentUserModel
     {
         [Key]
         public int userId{ get; set; }
@@ -13,4 +13,6 @@ namespace westcoast_education.web.Models;
         public string lastName { get; set; } = "";
         public string email { get; set; } = "";
         public string password { get; set; } = "";
+        public string phoneNumber { get; set; } = "";
+        public string address { get; set; } = "";
     }

@@ -3,6 +3,7 @@ namespace westcoast_education.web.Interfaces;
     public interface IUnitOfWork
     {
         ICourseRepository CourseRepository {get;}
-        IUserRepository UserRepository{get;}
+        ITeacherUserRepository TeacherUserRepository{get;}
+        IStudentUserRepository StudentUserRepository{get;}
         Task<bool> Complete();
     }

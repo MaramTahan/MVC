@@ -1,7 +1,6 @@
-using Microsoft.AspNetCore.Authorization;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using westcoast_education.web.Data;
+
 using westcoast_education.web.Interfaces;
 using westcoast_education.web.Models;
 using westcoast_education.web.ViewModels;
@@ -9,7 +8,7 @@ using westcoast_education.web.ViewModels;
 namespace westcoast_education.web.Controllers;
 
 [Route("courses/admin")]
-[Authorize]
+
     public class CoursesAdminController : Controller
     {
   private readonly IUnitOfWork _unitOfWork;
@@ -54,29 +53,28 @@ namespace westcoast_education.web.Controllers;
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create(CoursePostViewModel addcourse)
+        public async Task<IActionResult> Create(CoursePostViewModel addCourse)
         {
             try
             {
-                  if (!ModelState.IsValid) return View("create", addcourse);
-                var exists = await _unitOfWork.CourseRepository.FindBycourseNumberAsync(addcourse.courseNumber);
+                  if (!ModelState.IsValid) return View("Create", addCourse);
+                var exists = await _unitOfWork.CourseRepository.FindBycourseNumberAsync(addCourse.courseNumber);
                 if (exists is not null)
             {
                 var error = new ErrorModel
                 {
-                    ErrorTitle = "An error has occurred when saving the course!",
-                    ErrorMessage = $"A course with a CourseId {addcourse.Id} already exists in the system"
+                    ErrorTitle = "An error has occurred when saving the course!"
                 };
 
                 return View("_Error", error);
             }
             var courseToAdd = new Courses{
-                courseNumber = addcourse.courseNumber,
-                name = addcourse.name,
-                startDate = addcourse.startDate,
-                endDate = addcourse.endDate,
-                teacher = addcourse.teacher,
-                placeStudy = addcourse.placeStudy
+                courseNumber = addCourse.courseNumber,
+                name = addCourse.name,
+                startDate = addCourse.startDate,
+                endDate = addCourse.endDate,
+                teacher = addCourse.teacher,
+                placeStudy = addCourse.placeStudy
             };
             if(await _unitOfWork.CourseRepository.AddAsync(courseToAdd)){
                 if (await _unitOfWork.Complete())
@@ -86,8 +84,7 @@ namespace westcoast_education.web.Controllers;
             }
             var saveError = new ErrorModel
                 {
-                    ErrorTitle = "An error has occurred when saving the course!",
-                    ErrorMessage = $"A course with a CourseId {addcourse.Id} already exists in the system"
+                    ErrorTitle = "An error has occurred when saving the course!"
                 };
 
                 return View("_Error", saveError);
@@ -112,8 +109,8 @@ namespace westcoast_education.web.Controllers;
             public async Task<IActionResult> Edit(int Id){
                try
                {
-                var courseEdit = await _unitOfWork.CourseRepository.FindByIdAsync(Id);
-                if (courseEdit is null){
+                var result = await _unitOfWork.CourseRepository.FindByIdAsync(Id);
+                if (result is null){
                     var error = new ErrorModel
             {
                 ErrorTitle = "An error occurred when we were about to pick up a course for editing",
@@ -122,15 +119,15 @@ namespace westcoast_education.web.Controllers;
              return View("_Error", error);
                 }
                 var model = new CourseUpdateViewModel{
-                Id = courseEdit.Id,
-                courseNumber = courseEdit.courseNumber,
-                name = courseEdit.name,
-                startDate = courseEdit.startDate,
-                endDate = courseEdit.endDate,
-                teacher = courseEdit.teacher,
-                placeStudy = courseEdit.placeStudy
+                Id = result.Id,
+                courseNumber = result.courseNumber,
+                name = result.name,
+                startDate = result.startDate,
+                endDate = result.endDate,
+                teacher = result.teacher,
+                placeStudy = result.placeStudy
                 };
-                return View("edit", model);
+                return View("Edit", model);
                }
                catch (Exception ex)
                {
@@ -146,20 +143,21 @@ namespace westcoast_education.web.Controllers;
             }
 
             [HttpPost("edit/{Id}")]
-            public async Task<IActionResult> Edit(int Id, CourseUpdateViewModel courseEdit){
+            public async Task<IActionResult> Edit(int Id, CourseUpdateViewModel addCourse){
                 try
                 {
-                    if (!ModelState.IsValid) return View("edit", courseEdit);
+                    if (!ModelState.IsValid) return View("Edit", addCourse);
 
                     var courseToUpdate = await _unitOfWork.CourseRepository.FindByIdAsync(Id);
 
                     if (courseToUpdate is null) return RedirectToAction(nameof(Index));
-                    courseToUpdate.courseNumber = courseEdit.courseNumber;
-                    courseToUpdate.name = courseEdit.name;
-                    courseToUpdate.startDate = courseEdit.startDate;
-                    courseToUpdate.endDate = courseEdit.endDate;
-                    courseToUpdate.teacher = courseEdit.teacher;
-                    courseToUpdate.placeStudy = courseEdit.placeStudy;
+                    courseToUpdate.courseNumber = 
+                    addCourse.courseNumber;
+                    courseToUpdate.name = addCourse.name;
+                    courseToUpdate.startDate = addCourse.startDate;
+                    courseToUpdate.endDate = addCourse.endDate;
+                    courseToUpdate.teacher = addCourse.teacher;
+                    courseToUpdate.placeStudy = addCourse.placeStudy;
 
                     if(await _unitOfWork.CourseRepository.UpdateAsync(courseToUpdate)){
                         if (await _unitOfWork.Complete())
@@ -204,7 +202,7 @@ namespace westcoast_education.web.Controllers;
                             return RedirectToAction(nameof(Index));
                         }
                     }
-                     var error = new ErrorModel
+                    var error = new ErrorModel
             {
                 ErrorTitle = "An error has occurred when the course was to be deleted",
                 ErrorMessage = $"An error occurred when the car with coursenumber {courseToDelete.courseNumber} would be removed"

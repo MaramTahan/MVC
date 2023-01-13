@@ -1,91 +1,101 @@
 [
 
  {
+  "userId": 3300,
   "firstName": "Emily ",
   "lastName": "Smith",
   "phoneNumber": "0723340511",
-  "emailAddress": "emily.smith@gmail.com",
+  "email": "emily.smith@gmail.com",
   "address":"Emily Smith - 12399 Main Street, Varberg"
   
  },
 
  {
+  "userId": 3301,
   "firstName": "Michael",
   "lastName": "Johnson",
   "phoneNumber": "0723330056",
-  "emailAddress": " michael.johnson@outlook.com",
+  "email": " michael.johnson@outlook.com",
   "address":"Michael Johnson - 45605 Park Avenue, Jonköping"
  },
 
 
  {
+  "userId": 3302,
   "firstName": "Jessica",
   "lastName": "Williams",
   "phoneNumber": "0723776088",
-  "emailAddress": "  jessica.williams@yahoo.com",
+  "email": "  jessica.williams@yahoo.com",
   "address":"essica Williams - 78944 Maple Street, Jonköping"
  },
 
 
  {
+  "userId": 3303,
   "firstName": "Matthew",
   "lastName": "Brown",
   "phoneNumber": "0723220036",
-  "emailAddress": "  matthew.brown@hotmail.com",
+  "email": "  matthew.brown@hotmail.com",
   "address":"Matthew Brown - 32112 Oak Street, Göteborg"
  },
 
 
  {
+  "userId": 3304,
   "firstName": "Maram",
   "lastName": "Tahan",
   "phoneNumber": "0739842900",
-  "emailAddress": "  mera.tahan@gmail.com",
+  "email": "  mera.tahan@gmail.com",
   "address":"Maram Tahan - 43265 Nasaret, väröbacka"
  },
 
 
  {
+  "userId": 3305,
   "firstName": "Olivia ",
   "lastName": "Jones",
   "phoneNumber": "0738112927",
-  "emailAddress": "  olivia.jones@gnail.com",
+  "email": "  olivia.jones@gnail.com",
   "address":"Olivia Jones - 15933 Pine Street, Göteborg"
  },
 
 
  {
+  "userId": 3306,
   "firstName": "James ",
   "lastName": "Davis",
   "phoneNumber": "0736702010",
-  "emailAddress": "  james.davis@gmail.com",
+  "email": "  james.davis@gmail.com",
   "address":"James Davis -75333 Cedar Street, Borås"
  },
 
 
  {
+  "userId": 3307,
   "firstName": "Abigail ",
   "lastName": "Martinez",
   "phoneNumber": "0738449050",
-  "emailAddress": "   abigail.martinez@outlook.com",
+  "email": "   abigail.martinez@outlook.com",
   "address":"Abigail Martinez - 13590 Maple Avenue, Svenjonga"
  },
 
 
  {
+  "userId": 3308,
   "firstName": "Noah",
   "lastName": "Akkad",
   "phoneNumber": "0729447070",
-  "emailAddress": "  noah.akkad@gmail.com",
+  "email": "  noah.akkad@gmail.com",
   "address":"Noah Akkad- 42256 Nasaret, Bua"
  },
 
 
  {
+  "userId": 3309,
   "firstName": "Sophia",
   "lastName": "Garcia",
   "phoneNumber": "0723669898",
-  "emailAddress": "  sophia.garcia@hotmail.com",
+  "email": "  sophia.garcia@hotmail.com",
   "address":"Sophia Garcia - 3690 Pine Avenue, varanmo"
  }
 ]

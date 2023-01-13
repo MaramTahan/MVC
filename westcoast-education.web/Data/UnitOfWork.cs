@@ -14,7 +14,9 @@ public class UnitOfWork : IUnitOfWork
 
  public ICourseRepository CourseRepository => new CourseRepository(_context);
 
- public IUserRepository UserRepository => new UserRepository(_context);
+ public ITeacherUserRepository TeacherUserRepository => new TeacherUserRepository(_context);
+ 
+ public IStudentUserRepository StudentUserRepository => new StudentUserRepository(_context);
 
  public async Task<bool> Complete()
  {

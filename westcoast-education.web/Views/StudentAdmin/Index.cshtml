@@ -3,19 +3,21 @@
 }
 @model IList<westcoast_education.web.ViewModels.Users.UsersListViewModel>
 <div class="page">
-      <h1>Courses Available</h1>
+      <h1>Students List</h1>
       <div class="table-container">
          <div>
-            <a class="btn-add" asp-action="create" asp-controller="UserAdmin">Add Course<i class="fa-solid fa-plus"></i></a>
+            <a class="btn-add" asp-action="create" asp-controller="StudentAdmin">Add Course<i class="fa-solid fa-plus"></i></a>
         </div>
       <table>
          <thead>
             <tr>
                <th></th>
-               <th>UserName</th>
+               <th>UserId</th>
                <th>FirstName</th>
                <th>LastName</th>
                <th>E-post</th>
+               <th>PhoneNumber</th>
+               <th>Address</th>
                <th></th>
             </tr>
          </thead>
@@ -23,13 +25,16 @@
             @foreach (var user in Model){
                <tr>
                   <td class="edit-icon">
-                     <a asp-action="Edit" asp-controller="UserAdmin"><i class="fa-solid fa-pen"></i></a>
+                     <a asp-action="Edit" asp-controller="StudentAdmin"><i class="fa-solid fa-pen"></i></a>
                   </td>
-                  <td>@user.userName</td>
+                  <td>@user.userId</td>
                   <td>@user.firstName</td>
                   <td>@user.lastName</td>
                   <td>@user.email</td>
-                  <td class="delete-icon"><a asp-action="Delete" asp-controller="UserAdmin"><i class="fa-solid fa-trash"></i></a>
+                  <td>@user.phoneNumber</td>
+                  <td>@user.address</td>
+
+                  <td class="delete-icon"><a asp-action="Delete" asp-controller="StudentAdmin"><i class="fa-solid fa-trash"></i></a>
                   </td>
                </tr>
             }

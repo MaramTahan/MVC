@@ -1,14 +1,11 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+namespace westcoast_education.web.ViewModels;
 
-namespace westcoast_education.web.ViewModels
-{
     public class CoursePostViewModel
     {
 
-[Required(ErrorMessage = "Id is mandatory")]
-[DisplayName("Id")]
-public int Id { get; set; }
+
 
 [Required(ErrorMessage = "courseNumber is mandatory")]
 [DisplayName("courseNumber")]
@@ -39,4 +36,3 @@ public string teacher { get; set; } = "";
 [DisplayName("placeStudy")]
 public string placeStudy { get; set; } = "";
     }
-}

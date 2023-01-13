@@ -1,31 +1,36 @@
+
 using Microsoft.AspNetCore.Mvc;
 using westcoast_education.web.Data;
 using westcoast_education.web.Interfaces;
 using westcoast_education.web.Models;
 using westcoast_education.web.ViewModels.Users;
 
-namespace westcoast_education.web.Controllers;
-
-    public class UserAdminController : Controller
+namespace westcoast_education.web.Controllers
+{
+    
+    public class StudentAdminController : Controller
     {
-  private readonly IUnitOfWork _unitOfWork;
-  public UserAdminController(IUnitOfWork unitOfWork)
+private readonly IUnitOfWork _unitOfWork;
+  public StudentAdminController(IUnitOfWork unitOfWork)
   {
    _unitOfWork = unitOfWork;
    
   }
 
-  [Route("users/admin")]
+  [Route("student/admin")]
         public async Task<IActionResult> Index()
         {
-            var result = await _unitOfWork.UserRepository.ListAllAsync();
+            var result = await _unitOfWork.StudentUserRepository.ListAllAsync();
             var users = result.Select(u => new UsersListViewModel
             {
                 userId = u.userId,
                 userName = u.userName,
                 firstName = u.firstName,
                 lastName = u.lastName,
-                email = u.email
+                email = u.email,
+                phoneNumber = u.phoneNumber,
+                address = u.address
+                
             }).ToList();
 
             return View("Index", users);
@@ -41,7 +46,7 @@ namespace westcoast_education.web.Controllers;
             try
             {
                   if (!ModelState.IsValid) return View("create", addUser);
-                var exists = await _unitOfWork.UserRepository.FindByEmailAsync(addUser.email);
+                var exists = await _unitOfWork.TeacherUserRepository.FindByEmailAsync(addUser.email);
                 if (exists is not null)
             {
                 var error = new ErrorModel
@@ -51,14 +56,16 @@ namespace westcoast_education.web.Controllers;
 
                 return View("_Error", error);
             }
-            var userToAdd = new UserModel{
+            var userToAdd = new StudentUserModel{
                 userName = addUser.userName,
                 firstName = addUser.firstName,
                 lastName = addUser.lastName,
                 email = addUser.email,
-                password= addUser.password
+                password= addUser.password,
+                phoneNumber = addUser.phoneNumber,
+                address = addUser.address
             };
-            if(await _unitOfWork.UserRepository.AddAsync(userToAdd)){
+            if(await _unitOfWork.StudentUserRepository.AddAsync(userToAdd)){
                 if (await _unitOfWork.Complete())
                 {
                     return RedirectToAction(nameof(Index));
@@ -91,7 +98,7 @@ namespace westcoast_education.web.Controllers;
             public async Task<IActionResult> Edit(int userId){
                try
                {
-                var userEdit = await _unitOfWork.UserRepository.FindByIdAsync(userId);
+                var userEdit = await _unitOfWork.StudentUserRepository.FindByIdAsync(userId);
                 if (userEdit is null){
                     var error = new ErrorModel
             {
@@ -105,7 +112,9 @@ namespace westcoast_education.web.Controllers;
                 firstName = userEdit.firstName,
                 lastName = userEdit.lastName,
                 email = userEdit.email,
-                password= userEdit.password
+                password= userEdit.password,
+                phoneNumber = userEdit.phoneNumber,
+                address = userEdit.address
                 };
                 return View("edit", userToUpdate);
                }
@@ -128,7 +137,7 @@ namespace westcoast_education.web.Controllers;
                 {
                     if (!ModelState.IsValid) return View("edit", userEdit);
 
-                    var userToUpdate = await _unitOfWork.UserRepository.FindByIdAsync(userId);
+                    var userToUpdate = await _unitOfWork.StudentUserRepository.FindByIdAsync(userId);
 
                     if (userToUpdate is null){
                         var notFoundError = new ErrorModel{
@@ -140,8 +149,10 @@ namespace westcoast_education.web.Controllers;
                     userToUpdate.firstName = userEdit.firstName;
                     userToUpdate.lastName = userEdit.lastName;
                     userToUpdate.email = userEdit.email;
+                    userToUpdate.phoneNumber = userEdit.phoneNumber;
+                    userToUpdate.address = userEdit.address;
 
-                    if(await _unitOfWork.UserRepository.UpdateAsync(userToUpdate)){
+                    if(await _unitOfWork.StudentUserRepository.UpdateAsync(userToUpdate)){
                         if (await _unitOfWork.Complete())
                         {
                             return RedirectToAction(nameof(Index));
@@ -173,11 +184,11 @@ namespace westcoast_education.web.Controllers;
             public async Task<IActionResult> Delete(int userId){
                 try
                 {
-                    var userToDelete = await _unitOfWork.UserRepository.FindByIdAsync(userId);
+                    var userToDelete = await _unitOfWork.StudentUserRepository.FindByIdAsync(userId);
 
                     if (userToDelete is null) return RedirectToAction(nameof(Index));
 
-                    if(await _unitOfWork.UserRepository.DeleteAsync(userToDelete)){
+                    if(await _unitOfWork.StudentUserRepository.DeleteAsync(userToDelete)){
                         if (await _unitOfWork.Complete())
                         {
                             return RedirectToAction(nameof(Index));
@@ -204,4 +215,6 @@ namespace westcoast_education.web.Controllers;
                 }
             }
             //-------------------------end delete course----------
+
     }
+}

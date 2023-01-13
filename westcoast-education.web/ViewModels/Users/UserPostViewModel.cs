@@ -28,4 +28,7 @@ namespace westcoast_education.web.ViewModels.Users;
     [Required(ErrorMessage = "A default password is required")]
     [DisplayName("Temporary password")]
     public string password { get; set; } = "";
+    public string coursesTaught { get; set; } = "";
+    public string phoneNumber { get; set; } = "";
+    public string address { get; set; } = "";
     }

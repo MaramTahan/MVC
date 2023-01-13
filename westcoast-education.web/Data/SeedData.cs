@@ -28,46 +28,46 @@ namespace westcoast_education.web.Data;
         }
         }
 //------------------------------------------------------
-    //     public static async Task LoadStudentData(westcoasteducationContext context)
-    // {
-    //     var options = new JsonSerializerOptions
-    //     {
-    //         PropertyNameCaseInsensitive = true
-    //     };
+        public static async Task LoadStudentData(westcoasteducationContext context)
+    {
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
         
-    //     if (context.GetstudentData().Any()) return;
+        if (context.studentData.Any()) return;
 
-    //     var json = System.IO.File.ReadAllText("Data/json/Student.json");
+        var json = System.IO.File.ReadAllText("Data/json/Student.json");
         
-    //     var studentList = JsonSerializer.Deserialize<List<Student>> 
-    //         (json, options);
+        var studentList = JsonSerializer.Deserialize<List<StudentUserModel>> 
+            (json, options);
 
-    //     if (studentList is not null && studentList.Count > 0)
-    //     {
-    //         await context.GetstudentData().AddRangeAsync(studentList);
-    //         await context.SaveChangesAsync();
-    //     }
-    // }
+        if (studentList is not null && studentList.Count > 0)
+        {
+            await context.studentData.AddRangeAsync(studentList);
+            await context.SaveChangesAsync();
+        }
+    }
     // //------------------------------------------------------
 
-    // public static async Task LoadTeacherData(westcoasteducationContext context)
-    // {
-    //     var options = new JsonSerializerOptions
-    //     {
-    //         PropertyNameCaseInsensitive = true
-    //     };
+    public static async Task LoadTeacherData(westcoasteducationContext context)
+    {
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
 
-    //     if (context.GetteacherData().Any()) return;
+        if (context.teacherData.Any()) return;
 
-    //     var json = System.IO.File.ReadAllText("Data/json/Teacher.json");
+        var json = System.IO.File.ReadAllText("Data/json/Teacher.json");
         
-    //     var TeacherList = JsonSerializer.Deserialize<List<Teacher>> 
-    //         (json, options);
+        var TeacherList = JsonSerializer.Deserialize<List<TeacherUserModel>> 
+            (json, options);
 
-    //     if (TeacherList is not null && TeacherList.Count > 0)
-    //     {
-    //         await context.GetteacherData().AddRangeAsync(TeacherList);
-    //         await context.SaveChangesAsync();
-    //     }
-    // }
+        if (TeacherList is not null && TeacherList.Count > 0)
+        {
+            await context.teacherData.AddRangeAsync(TeacherList);
+            await context.SaveChangesAsync();
+        }
+    }
     }

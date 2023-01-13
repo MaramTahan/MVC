@@ -1,7 +1,5 @@
+namespace westcoast_education.web.ViewModels;
 
-
-namespace westcoast_education.web.ViewModels
-{
     public class CourseListViewModel
     {
 
@@ -13,4 +11,3 @@ public string endDate { get; set; } = "";
 public string teacher { get; set; } = "";
 public string placeStudy { get; set; } = "";
     }
-}

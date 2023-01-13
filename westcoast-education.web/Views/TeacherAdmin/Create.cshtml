@@ -1,33 +1,29 @@
 @{
-    Layout = "_LayoutAdmin";
+ Layout = "_LayoutAdmin";
 }
-@model westcoast_education.web.ViewModels.CourseUpdateViewModel
+@model westcoast_education.web.ViewModels.Users.UserPostViewModel
 
- <div class="page">
-  <h1>Update Course @Model.courseNumber</h1>
-    <form class="shadow" asp-action="edit" asp-controller="CoursesAdmin" asp-route-Id=@Model.Id method="post">
+<div class="page">
+  <h1>Add User</h1>
+    <form class="shadow" asp-action="create" asp-controller="TeacherAdmin" method="post">
         <div class="form-control">
-            <label for="">Course.Nr</label>
+            <label for="">UserName</label>
             <input>
         </div>
         <div class="form-control">
-            <label for="">Course</label>
+            <label for="">FirstName</label>
             <input>
         </div>
         <div class="form-control">
-            <label for="">startDate </label>
+            <label for="">LastName </label>
             <input>
         </div>
         <div class="form-control">
-            <label for="">endDate</label>
+            <label for="">Email</label>
             <input>
         </div>
         <div class="form-control">
-            <label for="">teacher </label>
-            <input>
-        </div>
-        <div class="form-control">
-            <label for="">placeStudy </label>
+            <label for="">Password </label>
             <input>
         </div>
 
@@ -35,7 +31,7 @@
             <div class="buttons-container">
                 <button type="Submit" class="btn-save"><i class="fa-sharp fa-solid fa-floppy-disk"></i>
                     Save</button>
-                <a asp-action="index" asp-controller="CoursesAdmin" class="btn-warning"><i
+                <a asp-action="index" asp-controller="TeacherAdmin" class="btn-warning"><i
                         class="fa-solid fa-arrow-left"></i> Cancel</a>
             </div>
         </div>

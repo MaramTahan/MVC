@@ -1,13 +1,11 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+namespace westcoast_education.web.ViewModels;
 
-namespace westcoast_education.web.ViewModels
-{
     public class CourseUpdateViewModel
     {
 
 [Required(ErrorMessage = "Id is mandatory")]
-[DisplayName("Id")]
 public int Id { get; set; }
 
 
@@ -41,4 +39,3 @@ public string teacher { get; set; } = "";
 [DisplayName("placeStudy")]
 public string placeStudy { get; set; } = "";
     }
-}
