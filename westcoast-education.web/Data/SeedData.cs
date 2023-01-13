@@ -15,7 +15,7 @@ namespace westcoast_education.web.Data;
         if (context.coursesData.Any()) return;
 
         // Loading the json data...
-        var json = System.IO.File.ReadAllText("/Data/json/courses.json");
+        var json = System.IO.File.ReadAllText("Data/json/courses.json");
 
         // Convert the json objects to a list of Vehicle objects...
         var coursesList = JsonSerializer.Deserialize<List<Courses>> 
