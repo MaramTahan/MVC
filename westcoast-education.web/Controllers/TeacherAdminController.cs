@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using westcoast_education.web.Data;
 using westcoast_education.web.Interfaces;
 using westcoast_education.web.Models;
 using westcoast_education.web.ViewModels.Users;
-
 namespace westcoast_education.web.Controllers;
 
     public class TeacherAdminController : Controller
@@ -132,7 +130,7 @@ namespace westcoast_education.web.Controllers;
                }
             }
 
-            [HttpPost("edit/{userId}")]
+            [HttpPost("Edit/{userId}")]
             public async Task<IActionResult> Edit(int userId, UserUpdateViewModel userEdit){
                 try
                 {

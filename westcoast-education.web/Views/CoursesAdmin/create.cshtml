@@ -1,7 +1,8 @@
+@model westcoast_education.web.ViewModels.CoursePostViewModel
 @{
     Layout = "_LayoutAdmin";
 }
-@model westcoast_education.web.ViewModels.CoursePostViewModel
+
 
  <div class="page">
   <h1>Add Course</h1>
@@ -35,7 +36,7 @@
             <div class="buttons-container">
                 <button type="Submit" class="btn-save"><i class="fa-sharp fa-solid fa-floppy-disk"></i>
                     Save</button>
-                <a asp-action="index" asp-controller="CoursesAdmin" class="btn-warning"><i
+                <a asp-action="Index" asp-controller="CoursesAdmin" class="btn-warning"><i
                         class="fa-solid fa-arrow-left"></i> Cancel</a>
             </div>
         </div>

@@ -10,15 +10,15 @@ namespace westcoast_education.web.ViewModels.Users;
 
 
     [Required(ErrorMessage = "Username is mandatory")]
-    [DisplayName("username")]
+    [DisplayName("userName")]
     public string userName { get; set; } = "";
 
     [Required(ErrorMessage = "FirstName is mandatory")]
-    [DisplayName("firstname")]
+    [DisplayName("firstName")]
     public string firstName { get; set; } = "";
 
     [Required(ErrorMessage = "LastName is mandatory")]
-    [DisplayName("lastname")]
+    [DisplayName("lastName")]
     public string lastName { get; set; } = "";
 
     [Required(ErrorMessage = "E-post is mandatory")]

@@ -1,13 +1,14 @@
+@model IList<westcoast_education.web.ViewModels.Users.UsersListViewModel>
 @{
  Layout = "_LayoutAdmin";
 }
-@model IList<westcoast_education.web.ViewModels.Users.UsersListViewModel>
+
 <div class="page">
       <h1>Students List</h1>
       <br>
       <div class="table-container">
          <div>
-            <a class="btn-add" asp-action="create" asp-controller="StudentAdmin">Add Student<i class="fa-solid fa-plus"></i></a>
+            <a class="btn-add" asp-action="Create" asp-controller="StudentAdmin">Add Student<i class="fa-solid fa-plus"></i></a>
         </div>
       <table>
          <thead>

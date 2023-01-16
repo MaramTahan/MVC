@@ -1,10 +1,7 @@
-
 using Microsoft.AspNetCore.Mvc;
-
 using westcoast_education.web.Interfaces;
 using westcoast_education.web.Models;
 using westcoast_education.web.ViewModels;
-
 namespace westcoast_education.web.Controllers;
 
 [Route("courses/admin")]
@@ -46,13 +43,13 @@ namespace westcoast_education.web.Controllers;
             };
         }
 //--------------------------start create course----------------------
-        [HttpGet("create")]
+        [HttpGet("Create")]
         public IActionResult Create(){
             var addCourse = new CoursePostViewModel();
             return View("Create", addCourse);
         }
 
-        [HttpPost("create")]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create(CoursePostViewModel addCourse)
         {
             try
@@ -104,7 +101,7 @@ namespace westcoast_education.web.Controllers;
             //-------------------end create course------------------
             //------------------------------------------------------
             //-------------------start edit course------------------
-            [HttpGet("edit/{Id}")]
+            [HttpGet("Edit/{Id}")]
 
             public async Task<IActionResult> Edit(int Id){
                try
@@ -142,7 +139,7 @@ namespace westcoast_education.web.Controllers;
                }
             }
 
-            [HttpPost("edit/{Id}")]
+            [HttpPost("Edit/{Id}")]
             public async Task<IActionResult> Edit(int Id, CourseUpdateViewModel addCourse){
                 try
                 {
@@ -188,7 +185,7 @@ namespace westcoast_education.web.Controllers;
             //-----------------------end edit course--------------
             //--------------------------------------------------------
             //-----------------------start delete course-----------
-            [Route("delete/{Id}")]
+            [Route("Delete/{Id}")]
             public async Task<IActionResult> Delete(int Id){
                 try
                 {

@@ -1,10 +1,7 @@
-
 using Microsoft.AspNetCore.Mvc;
-using westcoast_education.web.Data;
 using westcoast_education.web.Interfaces;
 using westcoast_education.web.Models;
 using westcoast_education.web.ViewModels.Users;
-
 namespace westcoast_education.web.Controllers
 {
     
@@ -35,18 +32,18 @@ private readonly IUnitOfWork _unitOfWork;
 
             return View("Index", users);
         }
-        [HttpGet("create")]
+        [HttpGet("Create")]
         public IActionResult Create(){
             var addUser = new UserPostViewModel();
             return View("Create", addUser);
         }
-        [HttpPost("create")]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create(UserPostViewModel addUser)
         {
             try
             {
-                  if (!ModelState.IsValid) return View("create", addUser);
-                var exists = await _unitOfWork.TeacherUserRepository.FindByEmailAsync(addUser.email);
+                  if (!ModelState.IsValid) return View("Create", addUser);
+                var exists = await _unitOfWork.StudentUserRepository.FindByEmailAsync(addUser.email);
                 if (exists is not null)
             {
                 var error = new ErrorModel
@@ -93,7 +90,7 @@ private readonly IUnitOfWork _unitOfWork;
             //-------------------end create course------------------
             //------------------------------------------------------
             //-------------------start edit course------------------
-            [HttpGet("edit/{userId}")]
+            [HttpGet("Edit/{userId}")]
 
             public async Task<IActionResult> Edit(int userId){
                try
@@ -116,7 +113,7 @@ private readonly IUnitOfWork _unitOfWork;
                 phoneNumber = userEdit.phoneNumber,
                 address = userEdit.address
                 };
-                return View("edit", userToUpdate);
+                return View("Edit", userToUpdate);
                }
                catch (Exception ex)
                {
@@ -131,11 +128,11 @@ private readonly IUnitOfWork _unitOfWork;
                }
             }
 
-            [HttpPost("edit/{userId}")]
+            [HttpPost("Edit/{userId}")]
             public async Task<IActionResult> Edit(int userId, UserUpdateViewModel userEdit){
                 try
                 {
-                    if (!ModelState.IsValid) return View("edit", userEdit);
+                    if (!ModelState.IsValid) return View("Edit", userEdit);
 
                     var userToUpdate = await _unitOfWork.StudentUserRepository.FindByIdAsync(userId);
 
@@ -180,7 +177,7 @@ private readonly IUnitOfWork _unitOfWork;
             //-----------------------end edit course--------------
             //--------------------------------------------------------
             //-----------------------start delete course-----------
-            [Route("delete/{userId}")]
+            [Route("Delete/{userId}")]
             public async Task<IActionResult> Delete(int userId){
                 try
                 {
