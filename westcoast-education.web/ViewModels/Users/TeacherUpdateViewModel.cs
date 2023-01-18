@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace westcoast_education.web.ViewModels.Users;
 
-    public class UserUpdateViewModel
+    public class TeacherUpdateViewModel
     {
     [Required(ErrorMessage = "userId is mandatory")]
     public int userId { get; set; }

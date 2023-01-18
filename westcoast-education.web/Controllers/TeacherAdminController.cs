@@ -17,7 +17,7 @@ namespace westcoast_education.web.Controllers;
         public async Task<IActionResult> Index()
         {
             var result = await _unitOfWork.TeacherUserRepository.ListAllAsync();
-            var users = result.Select(u => new UsersListViewModel
+            var users = result.Select(u => new TeacherListViewModel
             {
                 userId = u.userId,
                 userName = u.userName,
@@ -34,11 +34,11 @@ namespace westcoast_education.web.Controllers;
         }
         [HttpGet("CreateTeacher")]
         public IActionResult Create(){
-            var addUser = new UserPostViewModel();
+            var addUser = new TeacherPostViewModel();
             return View("Create", addUser);
         }
         [HttpPost("CreateTeacher")]
-        public async Task<IActionResult> Create(UserPostViewModel addUser)
+        public async Task<IActionResult> Create(TeacherPostViewModel addUser)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace westcoast_education.web.Controllers;
             };
              return View("_Error", error);
                 }
-                var userToUpdate = new UserUpdateViewModel{
+                var userToUpdate = new TeacherUpdateViewModel{
                 userId = userEdit.userId,
                 userName = userEdit.userName,
                 firstName = userEdit.firstName,
@@ -131,7 +131,7 @@ namespace westcoast_education.web.Controllers;
             }
 
             [HttpPost("EditTeacher/{userId}")]
-            public async Task<IActionResult> Edit(int userId, UserUpdateViewModel addUser){
+            public async Task<IActionResult> Edit(int userId, TeacherUpdateViewModel addUser){
                 try
                 {
                     if (!ModelState.IsValid) return View("Edit", addUser);

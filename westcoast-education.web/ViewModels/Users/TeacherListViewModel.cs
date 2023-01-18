@@ -1,6 +1,6 @@
 namespace westcoast_education.web.ViewModels.Users;
 
-    public class UsersListViewModel
+    public class TeacherListViewModel
     {
     public int userId { get; set; }
     public string userName { get; set; } = "";
