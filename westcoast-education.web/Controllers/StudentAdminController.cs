@@ -172,7 +172,7 @@ private readonly IUnitOfWork _unitOfWork;
             //-----------------------end edit course--------------
             //--------------------------------------------------------
             //-----------------------start delete course-----------
-            [Route("Delete/{userId}")]
+            [Route("DeleteStudent/{userId}")]
             public async Task<IActionResult> Delete(int userId){
                 try
                 {

@@ -175,7 +175,7 @@ namespace westcoast_education.web.Controllers;
             //-----------------------end edit course--------------
             //--------------------------------------------------------
             //-----------------------start delete course-----------
-            [Route("deleteteacher/{userId}")]
+            [Route("DeleteTeacher/{userId}")]
             public async Task<IActionResult> Delete(int userId){
                 try
                 {
