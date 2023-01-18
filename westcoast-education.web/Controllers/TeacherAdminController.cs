@@ -32,12 +32,12 @@ namespace westcoast_education.web.Controllers;
 
             return View("Index", users);
         }
-        [HttpGet("Create")]
+        [HttpGet("CreateTeacher")]
         public IActionResult Create(){
             var addUser = new UserPostViewModel();
             return View("Create", addUser);
         }
-        [HttpPost("Create")]
+        [HttpPost("CreateTeacher")]
         public async Task<IActionResult> Create(UserPostViewModel addUser)
         {
             try
@@ -91,7 +91,7 @@ namespace westcoast_education.web.Controllers;
             //-------------------end create course------------------
             //------------------------------------------------------
             //-------------------start edit course------------------
-            [HttpGet("Edit/{userId}")]
+            [HttpGet("EditTeacher/{userId}")]
 
             public async Task<IActionResult> Edit(int userId){
                try
@@ -130,27 +130,22 @@ namespace westcoast_education.web.Controllers;
                }
             }
 
-            [HttpPost("Edit/{userId}")]
-            public async Task<IActionResult> Edit(int userId, UserUpdateViewModel userEdit){
+            [HttpPost("EditTeacher/{userId}")]
+            public async Task<IActionResult> Edit(int userId, UserUpdateViewModel addUser){
                 try
                 {
-                    if (!ModelState.IsValid) return View("Edit", userEdit);
+                    if (!ModelState.IsValid) return View("Edit", addUser);
 
                     var userToUpdate = await _unitOfWork.TeacherUserRepository.FindByIdAsync(userId);
 
-                    if (userToUpdate is null){
-                        var notFoundError = new ErrorModel{
-                            ErrorTitle ="user missing!"
-                        };
-                        return View("_Error", notFoundError);
-                    }
-                    userToUpdate.userName = userEdit.userName;
-                    userToUpdate.firstName = userEdit.firstName;
-                    userToUpdate.lastName = userEdit.lastName;
-                    userToUpdate.email = userEdit.email;
-                    userToUpdate.coursesTaught = userEdit.coursesTaught;
-                    userToUpdate.phoneNumber = userEdit.phoneNumber;
-                    userToUpdate.address = userEdit.address;
+                    if (userToUpdate is null)return RedirectToAction(nameof(Index));
+                    userToUpdate.userName = addUser.userName;
+                    userToUpdate.firstName = addUser.firstName;
+                    userToUpdate.lastName = addUser.lastName;
+                    userToUpdate.email = addUser.email;
+                    userToUpdate.coursesTaught = addUser.coursesTaught;
+                    userToUpdate.phoneNumber = addUser.phoneNumber;
+                    userToUpdate.address = addUser.address;
 
                     if(await _unitOfWork.TeacherUserRepository.UpdateAsync(userToUpdate)){
                         if (await _unitOfWork.Complete())
@@ -180,7 +175,7 @@ namespace westcoast_education.web.Controllers;
             //-----------------------end edit course--------------
             //--------------------------------------------------------
             //-----------------------start delete course-----------
-            [Route("delete/{userId}")]
+            [Route("deleteteacher/{userId}")]
             public async Task<IActionResult> Delete(int userId){
                 try
                 {

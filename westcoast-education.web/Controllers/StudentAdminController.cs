@@ -18,7 +18,7 @@ private readonly IUnitOfWork _unitOfWork;
         public async Task<IActionResult> Index()
         {
             var result = await _unitOfWork.StudentUserRepository.ListAllAsync();
-            var users = result.Select(u => new UsersListViewModel
+            var users = result.Select(u => new StudentListViewModel
             {
                 userId = u.userId,
                 userName = u.userName,
@@ -32,13 +32,13 @@ private readonly IUnitOfWork _unitOfWork;
 
             return View("Index", users);
         }
-        [HttpGet("Create")]
+        [HttpGet("CreateStudent")]
         public IActionResult Create(){
-            var addUser = new UserPostViewModel();
+            var addUser = new StudentPostViewModel();
             return View("Create", addUser);
         }
-        [HttpPost("Create")]
-        public async Task<IActionResult> Create(UserPostViewModel addUser)
+        [HttpPost("CreateStudent")]
+        public async Task<IActionResult> Create(StudentPostViewModel addUser)
         {
             try
             {
@@ -90,7 +90,7 @@ private readonly IUnitOfWork _unitOfWork;
             //-------------------end create course------------------
             //------------------------------------------------------
             //-------------------start edit course------------------
-            [HttpGet("Edit/{userId}")]
+            [HttpGet("EditStudent/{userId}")]
 
             public async Task<IActionResult> Edit(int userId){
                try
@@ -103,7 +103,7 @@ private readonly IUnitOfWork _unitOfWork;
             };
              return View("_Error", error);
                 }
-                var userToUpdate = new UserUpdateViewModel{
+                var userToUpdate = new StudentUpdateViewModel{
                 userId = userEdit.userId,
                 userName = userEdit.userName,
                 firstName = userEdit.firstName,
@@ -128,26 +128,21 @@ private readonly IUnitOfWork _unitOfWork;
                }
             }
 
-            [HttpPost("Edit/{userId}")]
-            public async Task<IActionResult> Edit(int userId, UserUpdateViewModel userEdit){
+            [HttpPost("EditStudent/{userId}")]
+            public async Task<IActionResult> Edit(int userId, StudentUpdateViewModel addUser){
                 try
                 {
-                    if (!ModelState.IsValid) return View("Edit", userEdit);
+                    if (!ModelState.IsValid) return View("Edit", addUser);
 
                     var userToUpdate = await _unitOfWork.StudentUserRepository.FindByIdAsync(userId);
 
-                    if (userToUpdate is null){
-                        var notFoundError = new ErrorModel{
-                            ErrorTitle ="user missing!"
-                        };
-                        return View("_Error", notFoundError);
-                    }
-                    userToUpdate.userName = userEdit.userName;
-                    userToUpdate.firstName = userEdit.firstName;
-                    userToUpdate.lastName = userEdit.lastName;
-                    userToUpdate.email = userEdit.email;
-                    userToUpdate.phoneNumber = userEdit.phoneNumber;
-                    userToUpdate.address = userEdit.address;
+                    if (userToUpdate is null)return RedirectToAction(nameof(Index));
+                    userToUpdate.userName = addUser.userName;
+                    userToUpdate.firstName = addUser.firstName;
+                    userToUpdate.lastName = addUser.lastName;
+                    userToUpdate.email = addUser.email;
+                    userToUpdate.phoneNumber = addUser.phoneNumber;
+                    userToUpdate.address = addUser.address;
 
                     if(await _unitOfWork.StudentUserRepository.UpdateAsync(userToUpdate)){
                         if (await _unitOfWork.Complete())
