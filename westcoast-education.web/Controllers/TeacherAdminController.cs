@@ -3,7 +3,7 @@ using westcoast_education.web.Interfaces;
 using westcoast_education.web.Models;
 using westcoast_education.web.ViewModels.Users;
 namespace westcoast_education.web.Controllers;
-
+[Route("teacher/admin")]
     public class TeacherAdminController : Controller
     {
   private readonly IUnitOfWork _unitOfWork;
@@ -13,14 +13,15 @@ namespace westcoast_education.web.Controllers;
    
   }
 
-  [Route("teacher/admin")]
+  
         public async Task<IActionResult> Index()
         {
-            var result = await _unitOfWork.TeacherUserRepository.ListAllAsync();
+            try
+            {
+                var result = await _unitOfWork.TeacherUserRepository.ListAllAsync();
             var users = result.Select(u => new TeacherListViewModel
             {
                 userId = u.userId,
-                userName = u.userName,
                 firstName = u.firstName,
                 lastName = u.lastName,
                 email = u.email,
@@ -31,7 +32,20 @@ namespace westcoast_education.web.Controllers;
             }).ToList();
 
             return View("Index", users);
+            }
+            catch (Exception ex)
+            {
+                
+                var error = new ErrorModel
+            {
+                ErrorTitle = "An error has occurred when we were to pick up all the teacher",
+                ErrorMessage = ex.Message
+            };
+
+            return View("_Error", error);
+            };
         }
+        //--------------------------------------------
         [HttpGet("CreateTeacher")]
         public IActionResult Create(){
             var addUser = new TeacherPostViewModel();
@@ -54,11 +68,9 @@ namespace westcoast_education.web.Controllers;
                 return View("_Error", error);
             }
             var userToAdd = new TeacherUserModel{
-                userName = addUser.userName,
                 firstName = addUser.firstName,
                 lastName = addUser.lastName,
                 email = addUser.email,
-                password= addUser.password,
                 coursesTaught = addUser.coursesTaught,
                 phoneNumber = addUser.phoneNumber,
                 address = addUser.address
@@ -106,11 +118,9 @@ namespace westcoast_education.web.Controllers;
                 }
                 var userToUpdate = new TeacherUpdateViewModel{
                 userId = userEdit.userId,
-                userName = userEdit.userName,
                 firstName = userEdit.firstName,
                 lastName = userEdit.lastName,
                 email = userEdit.email,
-                password= userEdit.password,
                 coursesTaught = userEdit.coursesTaught,
                 phoneNumber = userEdit.phoneNumber,
                 address = userEdit.address
@@ -139,7 +149,6 @@ namespace westcoast_education.web.Controllers;
                     var userToUpdate = await _unitOfWork.TeacherUserRepository.FindByIdAsync(userId);
 
                     if (userToUpdate is null)return RedirectToAction(nameof(Index));
-                    userToUpdate.userName = addUser.userName;
                     userToUpdate.firstName = addUser.firstName;
                     userToUpdate.lastName = addUser.lastName;
                     userToUpdate.email = addUser.email;

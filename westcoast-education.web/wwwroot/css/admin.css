@@ -73,6 +73,9 @@ input[type='number'] {
  transition: all 0.4s ease-in-out;
  box-shadow: 1px 2px 15px #514e4e;
 }
+.shadow {
+ box-shadow: 0 2px 10px rgba(10, 10, 10, 0.6);
+}
 /*--------------------Eror part--------------------*/
 .text-secondary {
  color: rgb(22, 101, 64);

@@ -33,7 +33,7 @@ try{
     await SeedData.LoadStudentData(context);
     }
     catch(Exception ex){
-        Console.WriteLine("{0} - {1}", ex.Message, ex.InnerException!.Message);
+        Console.WriteLine("{0}", ex.Message);
     throw;
     }
 // Configure the HTTP request pipeline.

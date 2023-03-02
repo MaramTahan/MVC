@@ -2,26 +2,28 @@ using Microsoft.AspNetCore.Mvc;
 using westcoast_education.web.Interfaces;
 using westcoast_education.web.Models;
 using westcoast_education.web.ViewModels.Users;
-namespace westcoast_education.web.Controllers
-{
+namespace westcoast_education.web.Controllers;
+[Route("student/admin")]
+
     
     public class StudentAdminController : Controller
     {
-private readonly IUnitOfWork _unitOfWork;
-  public StudentAdminController(IUnitOfWork unitOfWork)
-  {
-   _unitOfWork = unitOfWork;
-   
-  }
+    private readonly IUnitOfWork _unitOfWork;
+    public StudentAdminController(IUnitOfWork unitOfWork)
+    {
+        _unitOfWork = unitOfWork;
+    }
 
-  [Route("student/admin")]
+  
         public async Task<IActionResult> Index()
         {
-            var result = await _unitOfWork.StudentUserRepository.ListAllAsync();
+            try
+            {
+                var result = await _unitOfWork.StudentUserRepository.ListAllAsync();
             var users = result.Select(u => new StudentListViewModel
             {
                 userId = u.userId,
-                userName = u.userName,
+                
                 firstName = u.firstName,
                 lastName = u.lastName,
                 email = u.email,
@@ -31,12 +33,27 @@ private readonly IUnitOfWork _unitOfWork;
             }).ToList();
 
             return View("Index", users);
+            }
+            catch (Exception ex)
+            {
+                
+                var error = new ErrorModel
+            {
+                ErrorTitle = "An error has occurred when we were to pick up all the student",
+                ErrorMessage = ex.Message
+            };
+
+            return View("_Error", error);
+            };
         }
+        //--------------------------------------------
+
         [HttpGet("CreateStudent")]
         public IActionResult Create(){
             var addUser = new StudentPostViewModel();
             return View("Create", addUser);
         }
+        
         [HttpPost("CreateStudent")]
         public async Task<IActionResult> Create(StudentPostViewModel addUser)
         {
@@ -54,11 +71,9 @@ private readonly IUnitOfWork _unitOfWork;
                 return View("_Error", error);
             }
             var userToAdd = new StudentUserModel{
-                userName = addUser.userName,
                 firstName = addUser.firstName,
                 lastName = addUser.lastName,
                 email = addUser.email,
-                password= addUser.password,
                 phoneNumber = addUser.phoneNumber,
                 address = addUser.address
             };
@@ -105,11 +120,9 @@ private readonly IUnitOfWork _unitOfWork;
                 }
                 var userToUpdate = new StudentUpdateViewModel{
                 userId = userEdit.userId,
-                userName = userEdit.userName,
                 firstName = userEdit.firstName,
                 lastName = userEdit.lastName,
                 email = userEdit.email,
-                password= userEdit.password,
                 phoneNumber = userEdit.phoneNumber,
                 address = userEdit.address
                 };
@@ -137,7 +150,6 @@ private readonly IUnitOfWork _unitOfWork;
                     var userToUpdate = await _unitOfWork.StudentUserRepository.FindByIdAsync(userId);
 
                     if (userToUpdate is null)return RedirectToAction(nameof(Index));
-                    userToUpdate.userName = addUser.userName;
                     userToUpdate.firstName = addUser.firstName;
                     userToUpdate.lastName = addUser.lastName;
                     userToUpdate.email = addUser.email;
@@ -209,4 +221,3 @@ private readonly IUnitOfWork _unitOfWork;
             //-------------------------end delete course----------
 
     }
-}

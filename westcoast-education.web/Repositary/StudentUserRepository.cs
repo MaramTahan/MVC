@@ -14,10 +14,9 @@ namespace westcoast_education.web.Repositary;
  public StudentUserRepository(westcoasteducationContext context) : base(context)
  {
  }
- public async Task<StudentUserModel?> FindByEmailAsync(string email)
+ public async Task<StudentUserModel?> FindByEmailAsync(string Email)
  {
-    //c => c.email.Trim().ToLower() = email.Trim().ToLower()
-  return await _context.studentData.SingleOrDefaultAsync();
+  return await _context.studentData.SingleOrDefaultAsync(c => c.email.Trim().ToLower() == Email.Trim().ToLower());
  }
 
     }

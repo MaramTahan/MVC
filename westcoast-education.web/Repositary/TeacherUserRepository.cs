@@ -10,9 +10,8 @@ public class TeacherUserRepository : Repository<TeacherUserModel>, ITeacherUserR
  public TeacherUserRepository(westcoasteducationContext context) : base(context)
  {
  }
- public async Task<TeacherUserModel?> FindByEmailAsync(string email)
+ public async Task<TeacherUserModel?> FindByEmailAsync(string Email)
  {
-    //c => c.email.Trim().ToLower() = email.Trim().ToLower()
-  return await _context.teacherData.SingleOrDefaultAsync();
+  return await _context.teacherData.SingleOrDefaultAsync((c => c.email.Trim().ToLower() == Email.Trim().ToLower()));
  }
 }

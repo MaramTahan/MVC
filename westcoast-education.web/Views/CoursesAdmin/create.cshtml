@@ -9,28 +9,28 @@
   <br>
     <form class="shadow" asp-action="Create" asp-controller="CoursesAdmin" method="post">
         <div class="form-control">
-            <label for="">Course.nr</label>
-            <input>
+            <label asp-for="courseNumber">Course.Nu</label>
+            <input asp-for="courseNumber"/>
         </div>
         <div class="form-control">
-            <label for="">Course</label>
-            <input>
+            <label asp-for="name">CourseName</label>
+            <input asp-for="name"/>
         </div>
         <div class="form-control">
-            <label for="">startDate </label>
-            <input>
+            <label asp-for="startDate">StartDate</label>
+            <input asp-for="startDate "/>
         </div>
         <div class="form-control">
-            <label for="">endDate</label>
-            <input>
+            <label asp-for="endDate">EndDate</label>
+            <input asp-for="endDate"/>
         </div>
         <div class="form-control">
-            <label for="">teacher </label>
-            <input>
+            <label asp-for="teacher">Teacher</label>
+            <input asp-for="teacher"/>
         </div>
         <div class="form-control">
-            <label for="">placeStudy </label>
-            <input>
+            <label asp-for="placeStudy">PlaceStudy</label>
+            <input asp-for="placeStudy"/>
         </div>
 
         <div class="form-control">
